@@ -8,8 +8,8 @@ class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, "white", self.position, self.radius, 2)
+    def draw(self):
+        pygame.draw.circle(controller.SCREEN, "white", self.position, self.radius, 2)
 
     def split(self):
         self.kill()
@@ -25,8 +25,8 @@ class Asteroid(CircleShape):
         a2.velocity = self.velocity.rotate(angle) * ASTEROID_SPEED_MULTIPLIER
         
 
-    def update(self, dt):
-        self.position += self.velocity * dt
+    def update(self):
+        self.position += self.velocity * controller.DELTA_TIME
 
         # Check if the asteroid is far off-screen
         # Add some padding (e.g., ASTEROID_MAX_RADIUS) to ensure it's fully off

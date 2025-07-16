@@ -53,7 +53,7 @@ class PlayingState(GameState):
     
     def update(self):
         # Update the entities
-        self.updatable.update(controller.DELTA_TIME)
+        self.updatable.update()
 
         # Check for collision
         for a in self.asteroids:
@@ -70,7 +70,7 @@ class PlayingState(GameState):
         # Rendering the screen
         controller.SCREEN.fill("black")
         for d in self.drawable:
-            d.draw(controller.SCREEN)
+            d.draw()
         pygame.display.flip()
 
 # End Game State
