@@ -1,6 +1,6 @@
 from circleshape import CircleShape
 import pygame
-from constants import ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_SPEED_MULTIPLIER
+from constants import ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_SPEED_MULTIPLIER, SCREEN_WIDTH, SCREEN_HEIGHT
 import random
 
 class Asteroid(CircleShape):
@@ -27,10 +27,10 @@ class Asteroid(CircleShape):
     def update(self, dt):
         self.position += self.velocity * dt
 
-        # # Check if the asteroid is far off-screen
-        # # Add some padding (e.g., ASTEROID_MAX_RADIUS) to ensure it's fully off
-        # if (self.position.x < -ASTEROID_MAX_RADIUS or
-        #     self.position.x > SCREEN_WIDTH + ASTEROID_MAX_RADIUS or
-        #     self.position.y < -ASTEROID_MAX_RADIUS or
-        #     self.position.y > SCREEN_HEIGHT + ASTEROID_MAX_RADIUS):
-        #     self.kill()
+        # Check if the asteroid is far off-screen
+        # Add some padding (e.g., ASTEROID_MAX_RADIUS) to ensure it's fully off
+        if (self.position.x < -ASTEROID_MAX_RADIUS or
+            self.position.x > SCREEN_WIDTH + ASTEROID_MAX_RADIUS or
+            self.position.y < -ASTEROID_MAX_RADIUS or
+            self.position.y > SCREEN_HEIGHT + ASTEROID_MAX_RADIUS):
+            self.kill()
