@@ -1,7 +1,8 @@
+import pygame
+import core.controller as controller
 from core.utils.circleshape import CircleShape
 from core.config import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
 from entities.projectile.projectile import Projectile
-import pygame
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -24,7 +25,21 @@ class Player(CircleShape):
         self.rotation += PLAYER_TURN_SPEED * dt
 
     def move(self, dt):
-        self.position += pygame.Vector2(0,1).rotate(self.rotation) * (PLAYER_SPEED * dt)
+        next_position = self.position + pygame.Vector2(0,1).rotate(self.rotation) * (PLAYER_SPEED * dt)
+        
+        # Out of Bounds: X-axis
+        if next_position[0] < 0:
+            next_position[0] = 0
+        elif next_position[0] > controller.CURRENT_SCREEN_WIDTH:
+            next_position[0] = controller.CURRENT_SCREEN_WIDTH
+        
+        # Out of Bounds: Y-axis
+        if next_position[1] < 0:
+            next_position[1] = 0
+        elif next_position[1] > controller.CURRENT_SCREEN_HEIGHT:
+            next_position[1] = controller.CURRENT_SCREEN_HEIGHT
+
+        self.position = next_position
 
     def shoot(self, dt):
         self.shoot_cooldown -= dt
