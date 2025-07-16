@@ -13,6 +13,7 @@ from entities.projectile.projectile import Projectile
 class PlayingState(GameState):
     def __init__(self):
         self.name = config.STATE_PLAYING
+        self.font_score = pygame.font.SysFont(config.FONT, 30)
 
         # Reset the score
         controller.SCORE = 0
@@ -54,5 +55,13 @@ class PlayingState(GameState):
     def draw(self):
         # Rendering the screen
         controller.SCREEN.fill("black")
+
         for d in self.drawable:
             d.draw()
+        
+        # Display the score on screen
+        score_text = self.font_score.render(f"Score: {controller.SCORE}", True, (255, 255, 255))
+        score_rect = score_text.get_rect()
+        score_rect.topleft = (10, 10)
+        controller.SCREEN.blit(score_text, score_rect)
+        
