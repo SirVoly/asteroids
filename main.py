@@ -16,7 +16,7 @@ class Game:
         controller.CURRENT_SCREEN_HEIGHT = controller.SCREEN.get_height()
 
         # Setting the initial gamestate
-        self.current_state = PlayingState()
+        self.current_state = MenuState()
 
         # Creating the clock
         self.clock = pygame.time.Clock()
@@ -64,6 +64,7 @@ class Game:
                 continue
 
             self.current_state.draw()
+            pygame.display.flip()
 
 if __name__ == "__main__":
     game = Game()

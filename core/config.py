@@ -13,3 +13,7 @@ PLAYER_SHOOT_COOLDOWN = 0.3
 PROJECTILE_RADIUS = 5
 
 FPS = 60
+
+# TODO Add colors
+# Primary, Secondary, Tertiary
+# Player, Bullets, Asteroids

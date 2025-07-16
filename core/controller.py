@@ -9,4 +9,3 @@ DELTA_TIME = 0
 
 # screen
 SCREEN = None
-
