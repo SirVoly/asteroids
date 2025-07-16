@@ -7,8 +7,8 @@ from core.states.game_state import GameState
 class MenuState(GameState):
     def __init__(self):
         self.name = config.STATE_MENU
-        self.font_title = pygame.font.SysFont('Comic Sans MS', 74)
-        self.font_message = pygame.font.SysFont('Comic Sans MS', 36)
+        self.font_title = pygame.font.SysFont(config.FONT, 74)
+        self.font_message = pygame.font.SysFont(config.FONT, 36)
 
     def handle_input(self):
         keys = pygame.key.get_pressed()

@@ -10,8 +10,8 @@ class GameOverState(GameState):
     def __init__(self):
         self.name = config.STATE_GAME_OVER
         self.start_timer = 1
-        self.font_title = pygame.font.SysFont('Comic Sans MS', 74)
-        self.font_message = pygame.font.SysFont('Comic Sans MS', 36)
+        self.font_title = pygame.font.SysFont(config.FONT, 74)
+        self.font_message = pygame.font.SysFont(config.FONT, 36)
 
     def handle_input(self):
         if (self.start_timer < 0):
