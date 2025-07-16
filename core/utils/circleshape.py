@@ -1,26 +1,28 @@
 import pygame
+import core.controller as controller
+from core.utils.shape import Shape
 
-# Base class for game objects
-class CircleShape(pygame.sprite.Sprite):
+class CircleShape(Shape):
     def __init__(self, x, y, radius):
-        # we will be using this later
-        if hasattr(self, "containers"):
-            super().__init__(self.containers)
-        else:
-            super().__init__()
-
-        self.position = pygame.Vector2(x, y)
-        self.velocity = pygame.Vector2(0, 0)
+        super().__init__(x, y)
         self.radius = radius
 
     def draw(self):
-        # sub-classes must override
-        pass
+        pygame.draw.circle(controller.SCREEN, self.color, self.position, self.effectiveRadius(), 2)
 
     def update(self):
-        # sub-classes must override
-        pass
+        self.position += self.velocity * controller.DELTA_TIME
+
+        # Check if the item is far off-screen
+        # Add some padding (e.g., radius) to ensure it's fully off
+        if (self.position.x < -self.effectiveRadius() or
+            self.position.x > controller.CURRENT_SCREEN_WIDTH + self.effectiveRadius() or
+            self.position.y < -self.effectiveRadius() or
+            self.position.y > controller.CURRENT_SCREEN_HEIGHT + self.effectiveRadius()):
+            self.kill()
 
     def hasCollided(self, other):
-        return self.position.distance_to(other.position) < (self.radius + other.radius)
-        
+        return self.position.distance_to(other.position) < (self.effectiveRadius() + other.effectiveRadius())
+
+    def effectiveRadius(self):
+        return self.radius * self.scale

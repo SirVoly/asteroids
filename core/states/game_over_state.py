@@ -5,7 +5,6 @@ import core.config as config
 from core.states.game_state import GameState
 
 # End Game State
-# TODO Add scoring
 class GameOverState(GameState):
     def __init__(self):
         self.name = config.STATE_GAME_OVER

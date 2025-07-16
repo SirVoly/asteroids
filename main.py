@@ -6,6 +6,11 @@ from core.states.menu_state import MenuState
 from core.states.playing_state import PlayingState
 from core.states.game_over_state import GameOverState
 
+# TODO Add stats (Time alive, ...)
+# TODO Add a stat screen
+# TODO Add a highscore mechanic
+# TODO Add power-ups (Speed boost, shield up, pass through bullets)
+
 class Game:
     def __init__(self):
         pygame.init()

@@ -1,31 +1,20 @@
 import pygame
 import core.controller as controller
-from core.utils.circleshape import CircleShape
-from core.config import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
+from core.utils.triangleshape import TriangleShape
+from core.config import PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
 from entities.projectile.projectile import Projectile
 
-class Player(CircleShape):
+# TODO Give the player a triangular collision box
+# TODO Add multiple lives + respawning
+class Player(TriangleShape):
     def __init__(self, x, y):
-        super().__init__(x, y, PLAYER_RADIUS)
-        self.rotation = 0
+        super().__init__(x, y, PLAYER_HEIGHT, PLAYER_WIDTH)
         self.shoot_cooldown = PLAYER_SHOOT_COOLDOWN
-
-    def triangle(self):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
-        a = self.position + forward * self.radius
-        b = self.position - forward * self.radius - right
-        c = self.position - forward * self.radius + right
-        return [a, b, c]
-    
-    def draw(self):
-        pygame.draw.polygon(controller.SCREEN, "white", self.triangle(), 2)
-
-    def rotate(self, direction):
-        self.rotation += PLAYER_TURN_SPEED * controller.DELTA_TIME * direction
+        self.turn_speed = PLAYER_TURN_SPEED
+        self.move_speed = PLAYER_SPEED
 
     def move(self, direction):
-        next_position = self.position + pygame.Vector2(0,1).rotate(self.rotation) * (PLAYER_SPEED * controller.DELTA_TIME * direction)
+        next_position = self.position + pygame.Vector2(0,1).rotate(self.rotation) * (self.move_speed * controller.DELTA_TIME * direction)
         
         # Out of Bounds: X-axis
         if next_position[0] < 0:
@@ -61,5 +50,9 @@ class Player(CircleShape):
             self.move(-1)
         if keys[pygame.K_SPACE]:
             self.shoot()
+
+    # TMP
+    def effectiveRadius(self):
+        return self.height/2 * self.scale
         
         
