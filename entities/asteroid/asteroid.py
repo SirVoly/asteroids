@@ -1,8 +1,8 @@
 import pygame
-import controller
+import core.controller as controller
 import random
-from circleshape import CircleShape
-from constants import ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_SPEED_MULTIPLIER
+from core.utils.circleshape import CircleShape
+from core.config import ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_SPEED_MULTIPLIER
 
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):

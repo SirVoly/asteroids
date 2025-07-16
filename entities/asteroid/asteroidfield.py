@@ -1,8 +1,8 @@
 import pygame
 import random
-import controller
-from asteroid import Asteroid
-from constants import ASTEROID_KINDS, ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_SPAWN_RATE
+import core.controller as controller
+from entities.asteroid.asteroid import Asteroid
+from core.config import ASTEROID_KINDS, ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_SPAWN_RATE
 
 
 class AsteroidField(pygame.sprite.Sprite):

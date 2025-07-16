@@ -1,9 +1,9 @@
 import pygame
-import controller
-from player import Player
-from asteroid import Asteroid
-from asteroidfield import AsteroidField
-from shot import Shot
+import core.controller as controller
+from entities.player.player import Player
+from entities.asteroid.asteroid import Asteroid
+from entities.asteroid.asteroidfield import AsteroidField
+from entities.projectile.projectile import Projectile
 
 def main():
 
@@ -22,12 +22,12 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
-    shots = pygame.sprite.Group()
+    projectiles = pygame.sprite.Group()
 
     Player.containers = (updatable, drawable)
     Asteroid.containers = (updatable, drawable, asteroids)
     AsteroidField.containers = (updatable)
-    Shot.containers = (updatable, drawable, shots)
+    Projectile.containers = (updatable, drawable, projectiles)
 
     player = Player(controller.CURRENT_SCREEN_WIDTH / 2, controller.CURRENT_SCREEN_HEIGHT / 2)
     asteroidfield = AsteroidField()
@@ -45,7 +45,7 @@ def main():
         updatable.update(dt)
 
         for a in asteroids:
-            for shot in shots:
+            for shot in projectiles:
                 if a.hasCollided(shot):
                     shot.kill()
                     a.split()
