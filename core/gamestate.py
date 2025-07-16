@@ -88,19 +88,18 @@ class PlayingState(GameState):
             d.draw()
 
 # End Game State
-# TODO Add restart option
 # TODO Add scoring
 class GameOverState(GameState):
     def __init__(self):
         self.start_timer = 1
-        my_font = pygame.font.SysFont('Comic Sans MS', 30)
-        self.exit_text = my_font.render('Game Over!', False, (255, 255, 255))
-        self.text_position = self.exit_text.get_rect()
-        self.text_position.center = (controller.CURRENT_SCREEN_WIDTH // 2, controller.CURRENT_SCREEN_HEIGHT // 2)
+        self.font_title = pygame.font.SysFont('Comic Sans MS', 74)
+        self.font_message = pygame.font.SysFont('Comic Sans MS', 36)
 
     def handle_input(self):
         if (self.start_timer < 0):
             keys = pygame.key.get_pressed()
+            if keys[pygame.K_r]:
+                return PlayingState()
             if keys[pygame.K_SPACE] or keys[pygame.K_KP_ENTER] or keys[pygame.K_ESCAPE]:
                 exit()
         return self
@@ -112,4 +111,13 @@ class GameOverState(GameState):
     def draw(self):
         # Rendering the screen
         controller.SCREEN.fill("black")
-        controller.SCREEN.blit(self.exit_text, self.text_position)
+
+        # Render the title text
+        text_welcome = self.font_title.render("GAME OVER!", True, (255, 255, 255))
+        welcome_rect = text_welcome.get_rect(center=(controller.CURRENT_SCREEN_WIDTH // 2, controller.CURRENT_SCREEN_HEIGHT // 2 - 50))
+        controller.SCREEN.blit(text_welcome, welcome_rect)
+
+        # Render the instruction text
+        text_press_space = self.font_message.render("Press R to restart the game", True, (255, 255, 255))
+        press_space_rect = text_press_space.get_rect(center=(controller.CURRENT_SCREEN_WIDTH // 2, controller.CURRENT_SCREEN_HEIGHT // 2 + 50))
+        controller.SCREEN.blit(text_press_space, press_space_rect)
