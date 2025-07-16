@@ -1,8 +1,5 @@
-# this allows us to use code from
-# the open-source pygame library
-# throughout this file
 import pygame
-from constants import *
+import controller
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
@@ -12,7 +9,12 @@ def main():
 
     pygame.init()
 
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((controller.CURRENT_SCREEN_WIDTH, controller.CURRENT_SCREEN_HEIGHT))
+    # Making sure the initial values match
+    controller.CURRENT_SCREEN_WIDTH = screen.get_width()
+    controller.CURRENT_SCREEN_HEIGHT = screen.get_height()
+
+    # Add FPS and timing mechanics
     clock = pygame.time.Clock()
     dt = 0
 
@@ -27,7 +29,7 @@ def main():
     AsteroidField.containers = (updatable)
     Shot.containers = (updatable, drawable, shots)
 
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    player = Player(controller.CURRENT_SCREEN_WIDTH / 2, controller.CURRENT_SCREEN_HEIGHT / 2)
     asteroidfield = AsteroidField()
 
     while True:
@@ -35,6 +37,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+            elif event.type == pygame.VIDEORESIZE:
+                screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
+                controller.CURRENT_SCREEN_WIDTH = event.size[0]
+                controller.CURRENT_SCREEN_HEIGHT = event.size[1]
             
         updatable.update(dt)
 

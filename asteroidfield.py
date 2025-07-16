@@ -1,29 +1,30 @@
 import pygame
 import random
+import controller
 from asteroid import Asteroid
-from constants import ASTEROID_KINDS, ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_SPAWN_RATE, SCREEN_HEIGHT, SCREEN_WIDTH
+from constants import ASTEROID_KINDS, ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_SPAWN_RATE
 
 
 class AsteroidField(pygame.sprite.Sprite):
     edges = [
         [
             pygame.Vector2(1, 0),
-            lambda y: pygame.Vector2(-ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT),
+            lambda y: pygame.Vector2(-ASTEROID_MAX_RADIUS, y * controller.CURRENT_SCREEN_HEIGHT),
         ],
         [
             pygame.Vector2(-1, 0),
             lambda y: pygame.Vector2(
-                SCREEN_WIDTH + ASTEROID_MAX_RADIUS, y * SCREEN_HEIGHT
+                controller.CURRENT_SCREEN_WIDTH + ASTEROID_MAX_RADIUS, y * controller.CURRENT_SCREEN_HEIGHT
             ),
         ],
         [
             pygame.Vector2(0, 1),
-            lambda x: pygame.Vector2(x * SCREEN_WIDTH, -ASTEROID_MAX_RADIUS),
+            lambda x: pygame.Vector2(x * controller.CURRENT_SCREEN_WIDTH, -ASTEROID_MAX_RADIUS),
         ],
         [
             pygame.Vector2(0, -1),
             lambda x: pygame.Vector2(
-                x * SCREEN_WIDTH, SCREEN_HEIGHT + ASTEROID_MAX_RADIUS
+                x * controller.CURRENT_SCREEN_WIDTH, controller.CURRENT_SCREEN_HEIGHT + ASTEROID_MAX_RADIUS
             ),
         ],
     ]
