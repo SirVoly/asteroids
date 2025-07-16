@@ -1,11 +1,21 @@
 import pygame
 import core.controller as controller
+import core.config as config
 from core.config import FPS
-from core.gamestate import *
+from core.states.menu_state import MenuState
+from core.states.playing_state import PlayingState
+from core.states.game_over_state import GameOverState
 
 class Game:
     def __init__(self):
         pygame.init()
+
+        # States
+        self.state_classes = {
+            config.STATE_MENU: MenuState,
+            config.STATE_PLAYING: PlayingState,
+            config.STATE_GAME_OVER: GameOverState,
+        }
 
         # Create the screen
         controller.SCREEN = pygame.display.set_mode((controller.CURRENT_SCREEN_WIDTH, controller.CURRENT_SCREEN_HEIGHT))
@@ -16,7 +26,7 @@ class Game:
         controller.CURRENT_SCREEN_HEIGHT = controller.SCREEN.get_height()
 
         # Setting the initial gamestate
-        self.current_state = MenuState()
+        self.current_state = self.state_classes[config.STATE_MENU]()
 
         # Creating the clock
         self.clock = pygame.time.Clock()
@@ -29,8 +39,8 @@ class Game:
             # Code to check for events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # Handle game quit event
-                    if type(self.current_state) == PlayingState:
-                        self.current_state = GameOverState()
+                    if self.current_state.name == config.STATE_PLAYING:
+                        self.current_state = self.state_classes[config.STATE_GAME_OVER]()
                         continue
                     else:
                         exit()
@@ -41,26 +51,26 @@ class Game:
 
             next_state = self.current_state.handle_input()
 
-            if next_state is None:
+            if next_state is None or not isinstance(next_state, str):
                 raise ValueError(
-                    f"State '{type(self.current_state).__name__}' update method returned None. "
-                    "It must explicitly return a GameState object (e.g., 'return self' or 'return NewState()')."
+                    f"State '{self.current_state.name}' handle_input method returned None. "
+                    "It must explicitly return a string  (e.g., 'return self.name' or 'return config.STATE_...')."
                 )
-            elif next_state is not self.current_state:
-                print(f"Transitioning from {type(self.current_state).__name__} to {type(next_state).__name__}")
-                self.current_state = next_state
+            elif next_state is not self.current_state.name:
+                print(f"Transitioning from {self.current_state.name} to {next_state}")
+                self.current_state = self.state_classes[next_state]()
                 continue
 
             next_state = self.current_state.update()
             
-            if next_state is None:
+            if next_state is None or not isinstance(next_state, str):
                 raise ValueError(
-                    f"State '{type(self.current_state).__name__}' update method returned None. "
-                    "It must explicitly return a GameState object (e.g., 'return self' or 'return NewState()')."
+                    f"State '{self.current_state.name}' update method returned None. "
+                    "It must explicitly return a string  (e.g., 'return self.name' or 'return config.STATE_...')."
                 )
-            elif next_state is not self.current_state:
-                print(f"Transitioning from {type(self.current_state).__name__} to {type(next_state).__name__}")
-                self.current_state = next_state
+            elif next_state is not self.current_state.name:
+                print(f"Transitioning from {self.current_state.name} to {next_state}")
+                self.current_state = self.state_classes[next_state]()
                 continue
 
             self.current_state.draw()

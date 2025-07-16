@@ -14,6 +14,10 @@ PROJECTILE_RADIUS = 5
 
 FPS = 60
 
+STATE_MENU = "MENU_STATE"
+STATE_PLAYING = "PLAYING_STATE"
+STATE_GAME_OVER = "GAME_OVER_STATE"
+
 # TODO Add colors
 # Primary, Secondary, Tertiary
 # Player, Bullets, Asteroids
