@@ -14,6 +14,9 @@ class PlayingState(GameState):
     def __init__(self):
         self.name = config.STATE_PLAYING
 
+        # Reset the score
+        controller.SCORE = 0
+
         # Create groups
         self.updatable = pygame.sprite.Group()
         self.drawable = pygame.sprite.Group()
@@ -42,6 +45,7 @@ class PlayingState(GameState):
                 if a.hasCollided(shot):
                     shot.kill()
                     a.split()
+                    controller.SCORE += 1
             if a.hasCollided(self.player):
                 return config.STATE_GAME_OVER
         

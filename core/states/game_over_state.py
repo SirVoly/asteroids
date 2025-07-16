@@ -34,15 +34,19 @@ class GameOverState(GameState):
 
         # Render the title text
         text_welcome = self.font_title.render("GAME OVER!", True, (255, 255, 255))
-        welcome_rect = text_welcome.get_rect(center=(controller.CURRENT_SCREEN_WIDTH // 2, controller.CURRENT_SCREEN_HEIGHT // 2 - 50))
+        welcome_rect = text_welcome.get_rect(center=(controller.CURRENT_SCREEN_WIDTH // 2, controller.CURRENT_SCREEN_HEIGHT // 2 - 100))
         controller.SCREEN.blit(text_welcome, welcome_rect)
 
-        # Render the instruction text
+        # Render the game score
+        text_press_space = self.font_message.render(f"Score: {controller.SCORE}", True, (255, 255, 255))
+        press_space_rect = text_press_space.get_rect(center=(controller.CURRENT_SCREEN_WIDTH // 2, controller.CURRENT_SCREEN_HEIGHT // 2 - 50))
+        controller.SCREEN.blit(text_press_space, press_space_rect)
+
+        # Render the instruction texts
         text_press_space = self.font_message.render("Press R to restart the game", True, (255, 255, 255))
         press_space_rect = text_press_space.get_rect(center=(controller.CURRENT_SCREEN_WIDTH // 2, controller.CURRENT_SCREEN_HEIGHT // 2 + 50))
         controller.SCREEN.blit(text_press_space, press_space_rect)
 
-        # Render the instruction text
         text_press_space = self.font_message.render("Press M to go back to the menu", True, (255, 255, 255))
         press_space_rect = text_press_space.get_rect(center=(controller.CURRENT_SCREEN_WIDTH // 2, controller.CURRENT_SCREEN_HEIGHT // 2 + 100))
         controller.SCREEN.blit(text_press_space, press_space_rect)

@@ -1,11 +1,11 @@
 
-# Screensize
-# Currently have initial values, but get updated by the game
+# Screen + Screensize
+SCREEN = None
 CURRENT_SCREEN_WIDTH = 1280
 CURRENT_SCREEN_HEIGHT = 720
 
 # dt
 DELTA_TIME = 0
 
-# screen
-SCREEN = None
+# Score
+SCORE = 0
